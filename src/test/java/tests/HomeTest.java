@@ -34,7 +34,7 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(page.seleniumImage.isDisplayed());
     }
 
-    @Test(testName = "US012 Selenium Image with preset methods")
+    @Test(testName = "US0012 Selenium Image with preset methods")
     public void test012(){page.isDisplayed(page.seleniumImage); }
 
     @Test(testName = "US002 Selenium Header", description = "Header is the correct word")
@@ -127,7 +127,12 @@ public class HomeTest extends BaseTest {
 
         return data;
     }
-
+    @Test(testName="Verify footlink",dataProvider="footerLink")
+    public void test0041(String footerLink, String windowtab)
+    {
+        page.assertEquals(driver.findElement(By.xpath("//a[text()='" + footerLink + "']")).getText(), footerLink);
+        System.out.println(driver.findElement(By.xpath("//a[text()='" + footerLink + "']")).getText());
+    }
     @Test(testName="Verify footlink is enable", dataProvider="footerLink")
     public void test0042(String footerLink, String windowTab)
     {
@@ -138,5 +143,19 @@ public class HomeTest extends BaseTest {
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         System.out.println(driver.getTitle());
     }
-
+    @Test(testName="Verify footerLink direct to the correct new window", dataProvider="footerLink")
+    public void test0043(String footerLink, String windowTab)
+    {
+        try{
+            page.click(driver.findElement(By.xpath("//a[text()='" + footerLink + "']")));
+            BrowserUtil.switchToNewWindow(driver);
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            Thread.sleep(500);
+            page.assertEquals(driver.getTitle(), windowTab);
+            System.out.println(driver.getTitle());
+        }catch(InterruptedException e)
+        {
+            System.out.println(e);
+        }
+    }
 }
