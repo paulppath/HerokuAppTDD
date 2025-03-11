@@ -1,11 +1,14 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import util.BrowserUtil;
 
 import java.util.*;
 
@@ -58,6 +61,7 @@ public class HomeTest extends BaseTest {
         for(int i = 0; i < expectedLinksList.size(); i++)
         {
             Assert.assertEquals(page.links.get(i).getText(),expectedLinksList.get(i));
+            System.out.println(page.links.get(i).getText());
         }
     }
 
@@ -102,25 +106,37 @@ public class HomeTest extends BaseTest {
     }
 
     @DataProvider(name="footerLink")
-    public Object[] data0042()
+    public Object[][] data0042()
     {
-        Object[] data = new Object[7];
+        Object[][] data = new Object[7][2];
 
-        data[0] = "PHP Travels";
-        data[1] = "Mercury tours";
-        data[2] = "Internet";
-        data[3] = "E-commerce";
-        data[4] = "Passion Tea Company";
-        data[5] = "Saucedemo";
-        data[6] = "Shopping Cart";
+        data[0][0] = "PHP Travels";
+        data[0][1] = "Book Your Free Demo Now - Phptravels";
+        data[1][0] = "Mercury tours";
+        data[1][1] = "demoaut.com - demoaut Resources and Information.";
+        data[2][0] = "Internet";
+        data[2][1] = "The Internet";
+        data[3][0] = "E-commerce";
+        data[3][1] = "InMotion Hosting";
+        data[4][0] = "Passion Tea Company";
+        data[4][1] = "practiceselenium.com";
+        data[5][0] = "Saucedemo";
+        data[5][1] = "Swag Labs";
+        data[6][0] = "Shopping Cart";
+        data[6][1] = "Typescript React Shopping cart";
 
         return data;
     }
 
     @Test(testName="Verify footlink is enable", dataProvider="footerLink")
-    public void test0042(String footerLink)
+    public void test0042(String footerLink, String windowTab)
     {
         page.assertTrue(driver.findElement(By.xpath("//a[text()='" + footerLink + "']")).isEnabled());
+        page.click(driver.findElement(By.xpath("//a[text()='" + footerLink + "']")));
+        BrowserUtil.switchToNewWindow(driver);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+        System.out.println(driver.getTitle());
     }
 
 }
