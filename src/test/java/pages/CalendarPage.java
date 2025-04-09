@@ -15,4 +15,6 @@ public class CalendarPage extends BasePage
 
     @FindBy(xpath="//h1")
     public WebElement displayedDate;
+    @FindBy(xpath="//abbr[contains(@aria-label, '19')]")
+    public WebElement d19;
 }
