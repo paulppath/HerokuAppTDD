@@ -59,8 +59,9 @@ public class CalendarTest extends BaseTest
     }
     public static String setExpectedDate(String date)
     {
+        String expectedDate = "19";
         String[] strs = date.split("/");
-        strs[1] = "19";
+        strs[1] = expectedDate;
         return strs[0] + "/" + strs[1] + "/" + strs[2];
     }
     public static String todayDate()
