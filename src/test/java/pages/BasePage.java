@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -14,6 +16,7 @@ import static java.lang.Thread.sleep;
 public class BasePage extends BaseTest
 {
     WebDriver driver;
+    Actions actions;
     public BasePage(WebDriver driver){this.driver = driver;}
     public void highlightElement(WebElement element)
     {
@@ -35,6 +38,13 @@ public class BasePage extends BaseTest
                 e.printStackTrace();
             }
         }
+    }
+    public void hoverOver(WebElement element)
+    {
+        actions = new Actions(driver);
+        actions.moveToElement(element).perform();
+        BaseTest.reportManager.logLocatorInfo("Hover over: " , element);
+        highlightElement(element);
     }
     public void sendKeys(WebElement element, String inputText)
     {
